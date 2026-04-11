@@ -6,6 +6,8 @@ public class Domicilio {
     private String localidad;
     private String provincia;
 
+    public Domicilio(){}
+
     public Domicilio(String calle, Integer numero, String localidad, String provincia) {
         this.calle = calle;
         this.numero = numero;
@@ -13,9 +15,40 @@ public class Domicilio {
         this.provincia = provincia;
     }
 
+    public String getCalle() {
+        return calle;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
     @Override
     public String toString() {
-        // Retornamos un texto formateado con los datos
         return calle + " " + numero + ", " + localidad + " - " + provincia;
     }
 }

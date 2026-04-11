@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
 
         LocalDate fecha = LocalDate.now();
         LocalDateTime fechaHora = LocalDateTime.now();
