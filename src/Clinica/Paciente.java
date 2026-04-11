@@ -73,6 +73,6 @@ public class Paciente {
     public String toString() {
         return "Paciente [ID: " + id + "] " + nombre + " " + apellido +
                 " | DNI: " + dni + " | Alta: " + fechaIngreso +
-                "\nResidencia: " + domicilio; // Acá ocurre la magia, llama a domicilio.toString()
+                "\nResidencia: " + domicilio;
     }
 }
