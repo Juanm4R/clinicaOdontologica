@@ -19,11 +19,10 @@ public class Paciente {
         this.domicilio = domicilio;
     }
 
-    public void setFechaIngreso(LocalDate fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-
-    public LocalDate getFechaIngreso() {
-        return fechaIngreso;
+    @Override
+    public String toString() {
+        return "Paciente [ID: " + id + "] " + nombre + " " + apellido +
+                " | DNI: " + dni + " | Alta: " + fechaIngreso +
+                "\nResidencia: " + domicilio; // Acá ocurre la magia, llama a domicilio.toString()
     }
 }

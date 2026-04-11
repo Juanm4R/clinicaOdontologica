@@ -15,11 +15,12 @@ public class Turno {
         this.fechaHora = fechaHora;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
-    }
-
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
+    @Override
+    public String toString() {
+        return "=== DETALLE DEL TURNO ===\n" +
+                "Fecha y Hora: " + fechaHora + " hs\n" +
+                "Atiende: " + odontologo + "\n" +
+                "Paciente: " + paciente + "\n" +
+                "=========================";
     }
 }

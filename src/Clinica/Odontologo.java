@@ -12,4 +12,9 @@ public class Odontologo {
         this.nombre = nombre;
         this.apellido = apellido;
     }
+
+    @Override
+    public String toString() {
+        return "Odontólogo: " + nombre + " " + apellido + " (Matrícula: " + matricula + ")";
+    }
 }

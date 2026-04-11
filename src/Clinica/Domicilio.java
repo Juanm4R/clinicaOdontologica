@@ -12,4 +12,10 @@ public class Domicilio {
         this.localidad = localidad;
         this.provincia = provincia;
     }
+
+    @Override
+    public String toString() {
+        // Retornamos un texto formateado con los datos
+        return calle + " " + numero + ", " + localidad + " - " + provincia;
+    }
 }
