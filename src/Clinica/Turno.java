@@ -1,6 +1,7 @@
 package Clinica;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Turno {
     private Integer id;
@@ -51,8 +52,13 @@ public class Turno {
 
     @Override
     public String toString() {
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        String fechaFormateada = fechaHora.format(formato);
+
         return "=== DETALLE DEL TURNO ===\n" +
-                "Fecha y Hora: " + fechaHora + " hs\n" +
+                "Fecha y Hora: " + fechaFormateada + " hs\n" +
                 "Atiende: " + odontologo + "\n" +
                 "Paciente: " + paciente + "\n" +
                 "=========================";
