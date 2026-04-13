@@ -1,54 +1,48 @@
 package Clinica;
 
+import java.util.Objects;
+
 public class Odontologo {
-    private Integer id;
-    private String matricula;
+    private Long id;
     private String nombre;
     private String apellido;
+    private String matricula;
 
-    public Odontologo(){}
+    public Odontologo() {}
 
-    public Odontologo(Integer id, String matricula, String nombre, String apellido) {
+    public Odontologo(Long id, String nombre, String apellido, String matricula) {
         this.id = id;
-        this.matricula = matricula;
         this.nombre = nombre;
         this.apellido = apellido;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
+    public String getMatricula() { return matricula; }
+    public void setMatricula(String matricula) { this.matricula = matricula; }
+
+    // Métodos de negocio
+    public String getNombreCompleto() {
+        return nombre + " " + apellido;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    // Dos odontólogos son iguales si tienen la misma matrícula
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Odontologo that = (Odontologo) o;
+        return Objects.equals(matricula, that.matricula);
     }
 
     @Override
     public String toString() {
-        return "Odontólogo: " + nombre + " " + apellido + " (Matrícula: " + matricula + ")";
+        return "Odontólogo: " + getNombreCompleto() + " (Matrícula: " + matricula + ")";
     }
 }
