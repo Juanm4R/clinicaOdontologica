@@ -1,4 +1,6 @@
-package Clinica;
+package main;
+
+import model.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

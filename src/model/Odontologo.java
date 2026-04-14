@@ -1,4 +1,4 @@
-package Clinica;
+package model;
 
 import java.util.Objects;
 
