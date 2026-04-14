@@ -37,12 +37,6 @@ public class Turno {
     public EstadoTurno getEstado() { return estado; }
     public void setEstado(EstadoTurno estado) { this.estado = estado; }
 
-    // Métodos de negocio útiles (sugeridos por la cátedra)
-    public boolean esFuturo() {
-        return fecha.isAfter(LocalDate.now()) ||
-                (fecha.isEqual(LocalDate.now()) && hora.isAfter(LocalTime.now()));
-    }
-
     @Override
     public String toString() {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
