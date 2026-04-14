@@ -23,7 +23,6 @@ public class Turno {
         this.estado = estado;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Paciente getPaciente() { return paciente; }
@@ -48,8 +47,8 @@ public class Turno {
                 "ID Turno: " + id + "\n" +
                 "Estado: " + estado + "\n" +
                 "Fecha y Hora: " + fechaFormateada + " a las " + horaFormateada + " hs\n" +
-                "Atiende: " + odontologo.getNombreCompleto() + "\n" +
-                "Paciente: " + paciente.getNombreCompleto() + "\n" +
+                "Atiende: " + odontologo.getNombre() + " " + odontologo.getApellido() + "\n" +
+                "Paciente: " + paciente.getNombre() + " " +paciente.getApellido() + "\n" +
                 "=========================";
     }
 }

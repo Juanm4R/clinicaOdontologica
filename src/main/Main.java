@@ -9,10 +9,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("--- INICIANDO SISTEMA CLÍNICA SONRISA FELIZ ---\n");
 
-        //Fecha de alta en la clinica
         LocalDate fecha = LocalDate.now();
 
-        // Agendamos el turno para mañana a las 10:30 am
         LocalDate fechaTurno = LocalDate.now().plusDays(1);
         LocalTime horaTurno = LocalTime.of(10, 30);
 
@@ -21,7 +19,6 @@ public class Main {
         Odontologo docPedro = new Odontologo(1L, "Pedro", "Fernandez", "MP-12345");
         Turno turnoManana = new Turno(1L, pacienteJuan, docPedro, fechaTurno, horaTurno, EstadoTurno.PENDIENTE);
 
-        // Imprimimos por consola para validar que todo se enlazó correctamente
         System.out.println("Datos del Paciente:");
         System.out.println(pacienteJuan);
 

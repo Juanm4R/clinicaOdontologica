@@ -36,12 +36,6 @@ public class Paciente {
     public Domicilio getDomicilio() { return domicilio; }
     public void setDomicilio(Domicilio domicilio) { this.domicilio = domicilio; }
 
-    // Métodos de Negocio sugeridos
-    public String getNombreCompleto() {
-        return nombre + " " + apellido;
-    }
-
-    // equals() basado en el DNI, ya que no puede haber dos pacientes con el mismo DNI
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,7 +46,7 @@ public class Paciente {
 
     @Override
     public String toString() {
-        return "Paciente [ID: " + id + "] " + getNombreCompleto() +
+        return "Paciente [ID: " + id + "] " + nombre + " " + apellido +
                 " | DNI: " + dni +  " | Alta: " + fechaIngreso +
                 "\nResidencia: " + domicilio;
     }

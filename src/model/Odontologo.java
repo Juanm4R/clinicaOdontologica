@@ -17,7 +17,6 @@ public class Odontologo {
         this.matricula = matricula;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getNombre() { return nombre; }
@@ -27,12 +26,6 @@ public class Odontologo {
     public String getMatricula() { return matricula; }
     public void setMatricula(String matricula) { this.matricula = matricula; }
 
-    // Métodos de negocio
-    public String getNombreCompleto() {
-        return nombre + " " + apellido;
-    }
-
-    // Dos odontólogos son iguales si tienen la misma matrícula
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,6 +36,6 @@ public class Odontologo {
 
     @Override
     public String toString() {
-        return "Odontólogo: " + getNombreCompleto() + " (Matrícula: " + matricula + ")";
+        return "Odontólogo: " + nombre + " " + apellido + " (Matrícula: " + matricula + ")";
     }
 }
