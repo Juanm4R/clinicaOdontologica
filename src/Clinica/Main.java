@@ -15,7 +15,7 @@ public class Main {
         LocalTime horaTurno = LocalTime.of(10, 30);
 
         Domicilio domicilioJuan = new Domicilio(1L, "Calle", "123", "Localidad", "Buenos Aires");
-        Paciente pacienteJuan = new Paciente(14563L, "Juan", "Doe", "12345678", "email@email.com", fecha, domicilioJuan);
+        Paciente pacienteJuan = new Paciente(14563L, "Juan", "Doe", "12345678", fecha, domicilioJuan);
         Odontologo docPedro = new Odontologo(1L, "Pedro", "Fernandez", "MP-12345");
         Turno turnoManana = new Turno(1L, pacienteJuan, docPedro, fechaTurno, horaTurno, EstadoTurno.PENDIENTE);
 
