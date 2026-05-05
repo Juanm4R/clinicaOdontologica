@@ -205,8 +205,12 @@ public class Main {
                 return;
             }
 
-            servicioTurno.registrarTurno(nuevoTurno);
-            System.out.println("Turno asignado con éxito.");
+            if(servicioTurno.registrarTurno(nuevoTurno)) {
+                System.out.println("Error: El odontólogo ya tiene un turno ocupado para ese horario.");
+            }
+            else{
+                System.out.println("Turno agendado con éxito.");
+            }
 
         } else if (op == 2) {
             System.out.println("\n-- Agenda de Turnos --");

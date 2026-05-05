@@ -12,7 +12,7 @@ public class ServicioTurno {
         this.repositorio = repositorio;
     }
 
-    public void registrarTurno(Turno turno) {
+    public boolean registrarTurno(Turno turno) {
         if (turno.getPaciente() == null) {
             throw new IllegalArgumentException("Error: El turno debe tener un paciente asignado.");
         }
@@ -34,17 +34,17 @@ public class ServicioTurno {
                 // turno YA AGENDADO
                 LocalDateTime inicioAgendado = turnoAgendado.getFechaHora();
                 LocalDateTime finAgendado = inicioAgendado.plusMinutes((long) turnoAgendado.calcularDuracionMinutos());
-                
+
                 boolean sePisan = inicioNuevo.isBefore(finAgendado) && finNuevo.isAfter(inicioAgendado);
 
                 if (sePisan) {
-                    throw new IllegalArgumentException("Error: El odontólogo ya tiene un turno ocupado entre "
-                            + inicioAgendado.toLocalTime() + " y " + finAgendado.toLocalTime() + ".");
+                    return true;
                 }
             }
         }
 
         repositorio.guardar(turno);
+        return false;
     }
 
     public Turno buscarTurno(Long id) {
