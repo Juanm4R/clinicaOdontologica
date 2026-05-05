@@ -22,6 +22,15 @@ public class ServicioTurno {
             throw new IllegalArgumentException("Error: El turno debe tener una fecha y hora asignadas.");
         }
 
+        List<Turno> turnosExistentes = repositorio.buscarTodos();
+        for (Turno turnoAgendado : turnosExistentes) {
+            if (turnoAgendado.getOdontologo().getId().equals(turno.getOdontologo().getId())) {
+                if (turnoAgendado.getFechaHora().equals(turno.getFechaHora())) {
+                    throw new IllegalArgumentException("El odontólogo ya posee un turno reservado para esa fecha y hora.");
+                }
+            }
+        }
+
         repositorio.guardar(turno);
     }
 
