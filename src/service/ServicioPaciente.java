@@ -1,4 +1,5 @@
 package service;
+
 import model.Paciente;
 import repository.IRepositorio;
 import java.util.List;
@@ -11,9 +12,9 @@ public class ServicioPaciente {
     }
 
     public void registrarPaciente(Paciente paciente) {
-        // Lógica de validación
+        // Regla de negocio: El paciente debe tener DNI sí o sí
         if (paciente.getDni() == null || paciente.getDni().trim().isEmpty()) {
-            throw new IllegalArgumentException("Error: El paciente debe tener un DNI válido.");
+            throw new IllegalArgumentException("Error: El DNI es obligatorio para registrar un paciente.");
         }
         repositorio.guardar(paciente);
     }
@@ -24,6 +25,13 @@ public class ServicioPaciente {
 
     public List<Paciente> listarTodos() {
         return repositorio.buscarTodos();
+    }
+
+    public void actualizarPaciente(Paciente paciente) {
+        if (paciente.getId() == null) {
+            throw new IllegalArgumentException("Error: El paciente debe tener un ID para ser actualizado.");
+        }
+        repositorio.actualizar(paciente);
     }
 
     public void eliminarPaciente(Long id) {
