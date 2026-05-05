@@ -67,7 +67,7 @@ public class Main {
         System.out.println("\n--- MENÚ PACIENTES ---");
         System.out.println("1. Registrar nuevo paciente");
         System.out.println("2. Listar todos los pacientes");
-        System.out.print("➤ Opción: ");
+        System.out.print("-> Opción: ");
         int op = scanner.nextInt();
         scanner.nextLine();
 
@@ -120,7 +120,7 @@ public class Main {
         System.out.println("\n--- MENÚ ODONTÓLOGOS ---");
         System.out.println("1. Registrar nuevo odontólogo");
         System.out.println("2. Listar todos los odontólogos");
-        System.out.print("➤ Opción: ");
+        System.out.print("-> Opción: ");
         int op = scanner.nextInt();
         scanner.nextLine();
 
@@ -155,7 +155,7 @@ public class Main {
         System.out.println("\n--- MENÚ TURNOS ---");
         System.out.println("1. Asignar nuevo turno");
         System.out.println("2. Listar todos los turnos");
-        System.out.print("➤ Opción: ");
+        System.out.print("-> Opción: ");
         int op = scanner.nextInt();
         scanner.nextLine();
 
@@ -183,12 +183,12 @@ public class Main {
             scanner.nextLine();
 
             LocalDateTime fechaTurno = LocalDateTime.now().plusDays(1);
-            System.out.println("ℹFecha asignada automáticamente para mañana: " + fechaTurno);
+            System.out.println("Fecha asignada automáticamente para mañana: " + fechaTurno);
 
             System.out.println("\n¿Qué tipo de turno es?");
             System.out.println("1. Turno Regular (Control / Rutina)");
             System.out.println("2. Turno de Urgencia (Dolor / Extracción)");
-            System.out.print("➤ Opción: ");
+            System.out.print("-> Opción: ");
             int tipo = scanner.nextInt();
             scanner.nextLine();
 
