@@ -3,6 +3,7 @@ package service;
 import model.Turno;
 import repository.IRepositorio;
 import java.util.List;
+import java.time.LocalDateTime;
 
 public class ServicioTurno {
     private IRepositorio<Turno> repositorio;
@@ -22,11 +23,23 @@ public class ServicioTurno {
             throw new IllegalArgumentException("Error: El turno debe tener una fecha y hora asignadas.");
         }
 
+        LocalDateTime inicioNuevo = turno.getFechaHora();
+        LocalDateTime finNuevo = inicioNuevo.plusMinutes((long) turno.calcularDuracionMinutos());
+
         List<Turno> turnosExistentes = repositorio.buscarTodos();
+
         for (Turno turnoAgendado : turnosExistentes) {
             if (turnoAgendado.getOdontologo().getId().equals(turno.getOdontologo().getId())) {
-                if (turnoAgendado.getFechaHora().equals(turno.getFechaHora())) {
-                    throw new IllegalArgumentException("El odontólogo ya posee un turno reservado para esa fecha y hora.");
+
+                // turno YA AGENDADO
+                LocalDateTime inicioAgendado = turnoAgendado.getFechaHora();
+                LocalDateTime finAgendado = inicioAgendado.plusMinutes((long) turnoAgendado.calcularDuracionMinutos());
+                
+                boolean sePisan = inicioNuevo.isBefore(finAgendado) && finNuevo.isAfter(inicioAgendado);
+
+                if (sePisan) {
+                    throw new IllegalArgumentException("Error: El odontólogo ya tiene un turno ocupado entre "
+                            + inicioAgendado.toLocalTime() + " y " + finAgendado.toLocalTime() + ".");
                 }
             }
         }
