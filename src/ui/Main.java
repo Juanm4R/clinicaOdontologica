@@ -15,7 +15,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // 1. INICIALIZACIÓN (Patrón Creator)
         IRepositorio<Paciente> repoPaciente = new RepositorioPaciente();
         servicioPaciente = new ServicioPaciente(repoPaciente);
 
@@ -27,7 +26,6 @@ public class Main {
 
         boolean salir = false;
 
-        // 2. BUCLE PRINCIPAL
         while (!salir) {
             System.out.println("\n==================================");
             System.out.println("   SISTEMA CLÍNICA ODONTOLÓGICA   ");
@@ -39,7 +37,7 @@ public class Main {
             System.out.print("➤ Elija una opción: ");
 
             int opcion = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer (CLAVE para que no se saltee el próximo nextLine)
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -103,7 +101,7 @@ public class Main {
 
             try {
                 servicioPaciente.registrarPaciente(paciente);
-                System.out.println("✅ Paciente registrado con éxito.");
+                System.out.println("Paciente registrado con éxito.");
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
@@ -164,16 +162,14 @@ public class Main {
         if (op == 1) {
             System.out.println("\n-- Asignación de Turno --");
 
-            // 1. Validar Paciente
             System.out.print("Ingrese el ID del Paciente: ");
             Long idPaciente = scanner.nextLong();
             Paciente pacienteAsignado = servicioPaciente.buscarPaciente(idPaciente);
             if (pacienteAsignado == null) {
                 System.out.println("Paciente no encontrado. Debe registrarlo primero.");
-                return; // Corta la ejecución de este método y vuelve al menú principal
+                return;
             }
 
-            // 2. Validar Odontólogo
             System.out.print("Ingrese el ID del Odontólogo: ");
             Long idOdontologo = scanner.nextLong();
             Odontologo odontologoAsignado = servicioOdontologo.buscarOdontologo(idOdontologo);
@@ -182,16 +178,13 @@ public class Main {
                 return;
             }
 
-            // 3. Datos del Turno
             System.out.print("ID para el nuevo turno: ");
             Long idTurno = scanner.nextLong();
             scanner.nextLine();
 
-            // Para simplificar la consola, usamos la fecha actual. En un sistema real se pediría ingresar día/hora.
-            LocalDateTime fechaTurno = LocalDateTime.now().plusDays(1); // Turno para mañana
+            LocalDateTime fechaTurno = LocalDateTime.now().plusDays(1);
             System.out.println("ℹFecha asignada automáticamente para mañana: " + fechaTurno);
 
-            // 4. POLIMORFISMO: Elegir tipo de turno
             System.out.println("\n¿Qué tipo de turno es?");
             System.out.println("1. Turno Regular (Control / Rutina)");
             System.out.println("2. Turno de Urgencia (Dolor / Extracción)");
@@ -212,7 +205,6 @@ public class Main {
                 return;
             }
 
-            // Guardamos el turno usando el polimorfismo
             servicioTurno.registrarTurno(nuevoTurno);
             System.out.println("Turno asignado con éxito.");
 
