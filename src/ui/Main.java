@@ -34,7 +34,7 @@ public class Main {
             System.out.println("2. Gestión de Odontólogos");
             System.out.println("3. Gestión de Turnos");
             System.out.println("0. Salir del Sistema");
-            System.out.print("➤ Elija una opción: ");
+            System.out.print("->Elija una opción: ");
 
             int opcion = scanner.nextInt();
             scanner.nextLine();
