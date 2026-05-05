@@ -14,7 +14,6 @@ public abstract class Persona {
         this.apellido = apellido;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -24,7 +23,6 @@ public abstract class Persona {
     public String getApellido() { return apellido; }
     public void setApellido(String apellido) { this.apellido = apellido; }
 
-    // Método que puede ser sobrescrito (Override) por las subclases
     public String getNombreCompleto() {
         return this.nombre + " " + this.apellido;
     }
