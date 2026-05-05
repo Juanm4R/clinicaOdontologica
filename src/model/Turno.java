@@ -1,54 +1,37 @@
 package model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
-public class Turno {
-    private Long id;
-    private Paciente paciente;
-    private Odontologo odontologo;
-    private LocalDate fecha;
-    private LocalTime hora;
-    private EstadoTurno estado;
+public abstract class Turno {
+    protected Long id;
+    protected Paciente paciente;
+    protected Odontologo odontologo;
+    protected LocalDateTime fechaHora;
 
-    public Turno() {}
-
-    public Turno(Long id, Paciente paciente, Odontologo odontologo, LocalDate fecha, LocalTime hora, EstadoTurno estado) {
+    public Turno(Long id, Paciente paciente, Odontologo odontologo, LocalDateTime fechaHora) {
         this.id = id;
         this.paciente = paciente;
         this.odontologo = odontologo;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.estado = estado;
+        this.fechaHora = fechaHora;
     }
 
+    public abstract double calcularDuracionMinutos();
+
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
     public Paciente getPaciente() { return paciente; }
-    public void setPaciente(Paciente paciente) { this.paciente = paciente; }
     public Odontologo getOdontologo() { return odontologo; }
+    public LocalDateTime getFechaHora() { return fechaHora; }
+
+    public void setId(Long id) { this.id = id; }
+    public void setPaciente(Paciente paciente) { this.paciente = paciente; }
     public void setOdontologo(Odontologo odontologo) { this.odontologo = odontologo; }
-    public LocalDate getFecha() { return fecha; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
-    public LocalTime getHora() { return hora; }
-    public void setHora(LocalTime hora) { this.hora = hora; }
-    public EstadoTurno getEstado() { return estado; }
-    public void setEstado(EstadoTurno estado) { this.estado = estado; }
+    public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
 
     @Override
     public String toString() {
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
-
-        String fechaFormateada = fecha.format(formatoFecha);
-        String horaFormateada = hora.format(formatoHora);
-        return "=== DETALLE DEL TURNO ===\n" +
-                "ID Turno: " + id + "\n" +
-                "Estado: " + estado + "\n" +
-                "Fecha y Hora: " + fechaFormateada + " a las " + horaFormateada + " hs\n" +
-                "Atiende: " + odontologo.getNombre() + " " + odontologo.getApellido() + "\n" +
-                "Paciente: " + paciente.getNombre() + " " +paciente.getApellido() + "\n" +
-                "=========================";
+        return "ID: " + id +
+                " | Paciente: " + paciente.getNombre() + " " + paciente.getApellido() +
+                " | Odontólogo: " + odontologo.getApellido() +
+                " | Fecha y Hora: " + fechaHora;
     }
 }
