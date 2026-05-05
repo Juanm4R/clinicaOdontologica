@@ -13,14 +13,12 @@ public class Paciente extends Persona {
     }
 
     public Paciente(Long id, String nombre, String apellido, String dni, LocalDate fechaIngreso, Domicilio domicilio) {
-        // Llamada al constructor de Persona
         super(id, nombre, apellido);
         this.dni = dni;
         this.fechaIngreso = fechaIngreso;
         this.domicilio = domicilio;
     }
 
-    // Getters y Setters propios
     public String getDni() { return dni; }
     public void setDni(String dni) { this.dni = dni; }
 
@@ -40,7 +38,6 @@ public class Paciente extends Persona {
 
     @Override
     public String toString() {
-        // Utilizamos el método heredado getNombreCompleto()
         return "Paciente [ID: " + id + "] " + getNombreCompleto() +
                 " | DNI: " + dni +  " | Alta: " + fechaIngreso +
                 "\nResidencia: " + domicilio;
