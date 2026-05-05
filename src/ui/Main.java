@@ -86,18 +86,19 @@ public class Main {
             String dni = scanner.nextLine();
 
             System.out.println("-- Datos del Domicilio --");
+            System.out.print("ID del Domicilio: ");
+            Long idDom = scanner.nextLong();
+            scanner.nextLine();
             System.out.print("Calle: ");
             String calle = scanner.nextLine();
             System.out.print("Número: ");
-            int numero = scanner.nextInt();
-            scanner.nextLine();
+            String numero = scanner.nextLine();
             System.out.print("Localidad: ");
             String localidad = scanner.nextLine();
             System.out.print("Provincia: ");
             String provincia = scanner.nextLine();
 
-            // Armamos los objetos con la data del usuario
-            Domicilio dom = new Domicilio(calle, numero, localidad, provincia);
+            Domicilio dom = new Domicilio(idDom, calle, numero, localidad, provincia);
             Paciente paciente = new Paciente(id, nombre, apellido, dni, LocalDate.now(), dom);
 
             try {
