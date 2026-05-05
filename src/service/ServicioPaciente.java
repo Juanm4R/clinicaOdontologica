@@ -12,7 +12,6 @@ public class ServicioPaciente {
     }
 
     public void registrarPaciente(Paciente paciente) {
-        // Regla de negocio: El paciente debe tener DNI sí o sí
         if (paciente.getDni() == null || paciente.getDni().trim().isEmpty()) {
             throw new IllegalArgumentException("Error: El DNI es obligatorio para registrar un paciente.");
         }
