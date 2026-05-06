@@ -138,8 +138,12 @@ public class Main {
             String matricula = scanner.nextLine();
 
             Odontologo odontologo = new Odontologo(id, nombre, apellido, matricula);
-            servicioOdontologo.registrarOdontologo(odontologo);
-            System.out.println("Odontólogo registrado con éxito.");
+            boolean exito = servicioOdontologo.registrarOdontologo(odontologo);
+            if (exito) {
+                System.out.println("Odontólogo registrado con éxito.");
+            } else {
+                System.out.println("Error: Datos inválidos o la matrícula ya se encuentra registrada.");
+            }
 
         } else if (op == 2) {
             System.out.println("\n-- Lista de Odontólogos --");
