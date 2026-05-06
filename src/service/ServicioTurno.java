@@ -13,36 +13,25 @@ public class ServicioTurno {
     }
 
     public boolean registrarTurno(Turno turno) {
-        if (turno.getPaciente() == null) {
-            throw new IllegalArgumentException("Error: El turno debe tener un paciente asignado.");
+        if (turno.getPaciente() == null || turno.getOdontologo() == null || turno.getFechaHora() == null) {
+            return false;
         }
-        if (turno.getOdontologo() == null) {
-            throw new IllegalArgumentException("Error: El turno debe tener un odontólogo asignado.");
-        }
-        if (turno.getFechaHora() == null) {
-            throw new IllegalArgumentException("Error: El turno debe tener una fecha y hora asignadas.");
-        }
-
         LocalDateTime inicioNuevo = turno.getFechaHora();
         LocalDateTime finNuevo = inicioNuevo.plusMinutes((long) turno.calcularDuracionMinutos());
 
         List<Turno> turnosExistentes = repositorio.buscarTodos();
-
         for (Turno turnoAgendado : turnosExistentes) {
             if (turnoAgendado.getOdontologo().getId().equals(turno.getOdontologo().getId())) {
 
-                // turno YA AGENDADO
                 LocalDateTime inicioAgendado = turnoAgendado.getFechaHora();
                 LocalDateTime finAgendado = inicioAgendado.plusMinutes((long) turnoAgendado.calcularDuracionMinutos());
 
                 boolean sePisan = inicioNuevo.isBefore(finAgendado) && finNuevo.isAfter(inicioAgendado);
-
                 if (sePisan) {
                     return true;
                 }
             }
         }
-
         repositorio.guardar(turno);
         return false;
     }
@@ -55,11 +44,12 @@ public class ServicioTurno {
         return repositorio.buscarTodos();
     }
 
-    public void actualizarTurno(Turno turno) {
+    public boolean actualizarTurno(Turno turno) {
         if (turno.getId() == null) {
-            throw new IllegalArgumentException("Error: El turno debe tener un ID para ser actualizado.");
+            return false;
         }
         repositorio.actualizar(turno);
+        return true;
     }
 
     public void eliminarTurno(Long id) {
