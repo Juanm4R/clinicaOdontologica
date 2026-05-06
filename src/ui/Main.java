@@ -208,9 +208,9 @@ public class Main {
 
             boolean exito = servicioTurno.registrarTurno(nuevoTurno);
             if (!exito) {
-                System.out.println("❌ Error: Datos inválidos o el odontólogo ya tiene un turno ocupado para ese horario.");
+                System.out.println("Error: Datos inválidos o el odontólogo ya tiene un turno ocupado para ese horario.");
             } else {
-                System.out.println("✅ Turno agendado con éxito.");
+                System.out.println("Turno agendado con éxito.");
             }
 
         } else if (op == 2) {
