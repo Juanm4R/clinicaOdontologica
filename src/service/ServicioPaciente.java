@@ -11,11 +11,19 @@ public class ServicioPaciente {
         this.repositorio = repositorio;
     }
 
-    public void registrarPaciente(Paciente paciente) {
+    // 🚨 Principio de Responsabilidad Única y Patrón Experto
+    public boolean registrarPaciente(Paciente paciente) {
         if (paciente.getDni() == null || paciente.getDni().trim().isEmpty()) {
-            throw new IllegalArgumentException("Error: El DNI es obligatorio para registrar un paciente.");
+            return false;
         }
+        for (Paciente p : repositorio.buscarTodos()) {
+            if (p.getDni().equals(paciente.getDni())) {
+                return false;
+            }
+        }
+
         repositorio.guardar(paciente);
+        return true;
     }
 
     public Paciente buscarPaciente(Long id) {
@@ -27,10 +35,9 @@ public class ServicioPaciente {
     }
 
     public void actualizarPaciente(Paciente paciente) {
-        if (paciente.getId() == null) {
-            throw new IllegalArgumentException("Error: El paciente debe tener un ID para ser actualizado.");
+        if (paciente.getId() != null) {
+            repositorio.actualizar(paciente);
         }
-        repositorio.actualizar(paciente);
     }
 
     public void eliminarPaciente(Long id) {

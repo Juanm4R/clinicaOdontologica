@@ -99,12 +99,13 @@ public class Main {
             Domicilio dom = new Domicilio(idDom, calle, numero, localidad, provincia);
             Paciente paciente = new Paciente(id, nombre, apellido, dni, LocalDate.now(), dom);
 
-            try {
-                servicioPaciente.registrarPaciente(paciente);
+            boolean exito = servicioPaciente.registrarPaciente(paciente);
+            if (exito) {
                 System.out.println("Paciente registrado con éxito.");
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+            } else {
+                System.out.println("Error: Datos inválidos o el DNI ya se encuentra registrado.");
             }
+
         } else if (op == 2) {
             System.out.println("\n-- Lista de Pacientes --");
             for (Paciente p : servicioPaciente.listarTodos()) {

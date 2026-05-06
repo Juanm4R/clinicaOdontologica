@@ -11,11 +11,19 @@ public class ServicioOdontologo {
         this.repositorio = repositorio;
     }
 
-    public void registrarOdontologo(Odontologo odontologo) {
+    public boolean registrarOdontologo(Odontologo odontologo) {
         if (odontologo.getMatricula() == null || odontologo.getMatricula().trim().isEmpty()) {
-            throw new IllegalArgumentException("Error: La matrícula es obligatoria para registrar un odontólogo.");
+            return false;
         }
+
+        for (Odontologo o : repositorio.buscarTodos()) {
+            if (o.getMatricula().equals(odontologo.getMatricula())) {
+                return false;
+            }
+        }
+
         repositorio.guardar(odontologo);
+        return true;
     }
 
     public Odontologo buscarOdontologo(Long id) {
@@ -27,10 +35,9 @@ public class ServicioOdontologo {
     }
 
     public void actualizarOdontologo(Odontologo odontologo) {
-        if (odontologo.getId() == null) {
-            throw new IllegalArgumentException("Error: El odontólogo debe tener un ID para ser actualizado.");
+        if (odontologo.getId() != null) {
+            repositorio.actualizar(odontologo);
         }
-        repositorio.actualizar(odontologo);
     }
 
     public void eliminarOdontologo(Long id) {
