@@ -99,11 +99,11 @@ public class Main {
             Domicilio dom = new Domicilio(idDom, calle, numero, localidad, provincia);
             Paciente paciente = new Paciente(id, nombre, apellido, dni, LocalDate.now(), dom);
 
-            boolean exito = servicioPaciente.registrarPaciente(paciente);
-            if (exito) {
+            try {
+                servicioPaciente.registrarPaciente(paciente);
                 System.out.println("Paciente registrado con éxito.");
-            } else {
-                System.out.println("Error: Datos inválidos o el DNI ya se encuentra registrado.");
+            } catch (exception.ClinicaException e) {
+                System.out.println("¡Ups! Hubo un problema: " + e.getMessage());
             }
 
         } else if (op == 2) {
@@ -138,11 +138,12 @@ public class Main {
             String matricula = scanner.nextLine();
 
             Odontologo odontologo = new Odontologo(id, nombre, apellido, matricula);
-            boolean exito = servicioOdontologo.registrarOdontologo(odontologo);
-            if (exito) {
+
+            try {
+                servicioOdontologo.registrarOdontologo(odontologo);
                 System.out.println("Odontólogo registrado con éxito.");
-            } else {
-                System.out.println("Error: Datos inválidos o la matrícula ya se encuentra registrada.");
+            } catch (exception.ClinicaException e) {
+                System.out.println(" Hubo un problema: " + e.getMessage());
             }
 
         } else if (op == 2) {
@@ -166,55 +167,50 @@ public class Main {
 
         if (op == 1) {
             System.out.println("\n-- Asignación de Turno --");
+            try {
+                System.out.print("Ingrese el ID del Paciente: ");
+                Long idPaciente = scanner.nextLong();
+                Paciente pacienteAsignado = servicioPaciente.buscarPaciente(idPaciente);
 
-            System.out.print("Ingrese el ID del Paciente: ");
-            Long idPaciente = scanner.nextLong();
-            Paciente pacienteAsignado = servicioPaciente.buscarPaciente(idPaciente);
-            if (pacienteAsignado == null) {
-                System.out.println("Paciente no encontrado. Debe registrarlo primero.");
-                return;
-            }
+                System.out.print("Ingrese el ID del Odontólogo: ");
+                Long idOdontologo = scanner.nextLong();
+                Odontologo odontologoAsignado = servicioOdontologo.buscarOdontologo(idOdontologo);
 
-            System.out.print("Ingrese el ID del Odontólogo: ");
-            Long idOdontologo = scanner.nextLong();
-            Odontologo odontologoAsignado = servicioOdontologo.buscarOdontologo(idOdontologo);
-            if (odontologoAsignado == null) {
-                System.out.println("Odontólogo no encontrado. Debe registrarlo primero.");
-                return;
-            }
+                System.out.print("ID para el nuevo turno: ");
+                Long idTurno = scanner.nextLong();
+                scanner.nextLine();
 
-            System.out.print("ID para el nuevo turno: ");
-            Long idTurno = scanner.nextLong();
-            scanner.nextLine();
+                LocalDateTime fechaTurno = LocalDateTime.now().plusDays(1);
+                System.out.println("Fecha asignada automáticamente para mañana: " + fechaTurno);
 
-            LocalDateTime fechaTurno = LocalDateTime.now().plusDays(1);
-            System.out.println("Fecha asignada automáticamente para mañana: " + fechaTurno);
+                System.out.println("\n¿Qué tipo de turno es?");
+                System.out.println("1. Turno Regular (Control / Rutina)");
+                System.out.println("2. Turno de Urgencia (Dolor / Extracción)");
+                System.out.print("-> Opción: ");
+                int tipo = scanner.nextInt();
+                scanner.nextLine();
 
-            System.out.println("\n¿Qué tipo de turno es?");
-            System.out.println("1. Turno Regular (Control / Rutina)");
-            System.out.println("2. Turno de Urgencia (Dolor / Extracción)");
-            System.out.print("-> Opción: ");
-            int tipo = scanner.nextInt();
-            scanner.nextLine();
+                Turno nuevoTurno = null;
 
-            Turno nuevoTurno = null;
+                if (tipo == 1) {
+                    nuevoTurno = new TurnoRegular(idTurno, pacienteAsignado, odontologoAsignado, fechaTurno);
+                } else if (tipo == 2) {
+                    System.out.print("Especifique el motivo de la urgencia: ");
+                    String motivo = scanner.nextLine();
+                    nuevoTurno = new TurnoUrgente(idTurno, pacienteAsignado, odontologoAsignado, fechaTurno, motivo);
+                } else {
+                    System.out.println("Tipo inválido. Turno cancelado.");
+                    return;
+                }
 
-            if (tipo == 1) {
-                nuevoTurno = new TurnoRegular(idTurno, pacienteAsignado, odontologoAsignado, fechaTurno);
-            } else if (tipo == 2) {
-                System.out.print("Especifique el motivo de la urgencia: ");
-                String motivo = scanner.nextLine();
-                nuevoTurno = new TurnoUrgente(idTurno, pacienteAsignado, odontologoAsignado, fechaTurno, motivo);
-            } else {
-                System.out.println("Tipo inválido. Turno cancelado.");
-                return;
-            }
-
-            boolean exito = servicioTurno.registrarTurno(nuevoTurno);
-            if (!exito) {
-                System.out.println("Error: Datos inválidos o el odontólogo ya tiene un turno ocupado para ese horario.");
-            } else {
+                servicioTurno.registrarTurno(nuevoTurno);
                 System.out.println("Turno agendado con éxito.");
+
+            } catch (exception.ClinicaException e) {
+                System.out.println("Operación fallida: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Error de entrada de datos. Por favor, intente nuevamente.");
+                scanner.nextLine();
             }
 
         } else if (op == 2) {

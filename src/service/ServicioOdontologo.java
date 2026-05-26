@@ -1,5 +1,7 @@
 package service;
 
+import exception.DatoInvalidoException;
+import exception.OdontologoNoEncontradoException;
 import model.Odontologo;
 import repository.IRepositorio;
 import java.util.List;
@@ -13,27 +15,34 @@ public class ServicioOdontologo {
 
     public void registrarOdontologo(Odontologo odontologo) throws DatoInvalidoException {
         if (odontologo.getMatricula() == null || odontologo.getMatricula().trim().isEmpty()) {
-            throw new IllegalArgumentException("Error: La matrícula es obligatoria para registrar un odontólogo.");
+            throw new DatoInvalidoException("Error: La matrícula es obligatoria para registrar un odontólogo.");
         }
         repositorio.guardar(odontologo);
     }
 
-    public Odontologo buscarOdontologo(Long id) {
-        return repositorio.buscar(id);
+    public Odontologo buscarOdontologo(Long id) throws OdontologoNoEncontradoException {
+        Odontologo encontrado = repositorio.buscar(id);
+        if (encontrado == null) {
+            throw new OdontologoNoEncontradoException("No se encontró ningún odontólogo con el ID: " + id);
+        }
+        return encontrado;
     }
 
     public List<Odontologo> listarTodos() {
         return repositorio.buscarTodos();
     }
 
-    public void actualizarOdontologo(Odontologo odontologo) {
+    public void actualizarOdontologo(Odontologo odontologo) throws DatoInvalidoException {
         if (odontologo.getId() == null) {
-            throw new IllegalArgumentException("Error: El odontólogo debe tener un ID para ser actualizado.");
+            throw new DatoInvalidoException("Error: El odontólogo debe tener un ID para ser actualizado.");
         }
         repositorio.actualizar(odontologo);
     }
 
-    public void eliminarOdontologo(Long id) {
+    public void eliminarOdontologo(Long id) throws OdontologoNoEncontradoException {
+        if (repositorio.buscar(id) == null) {
+            throw new OdontologoNoEncontradoException("No se puede eliminar: el odontólogo con ID " + id + " no existe.");
+        }
         repositorio.eliminar(id);
     }
 }
