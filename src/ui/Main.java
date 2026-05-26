@@ -67,7 +67,7 @@ public class Main {
         System.out.println("\n--- MENÚ PACIENTES ---");
         System.out.println("1. Registrar nuevo paciente");
         System.out.println("2. Listar todos los pacientes");
-        System.out.print("➤ Opción: ");
+        System.out.print("-> Opción: ");
         int op = scanner.nextInt();
         scanner.nextLine();
 
@@ -99,12 +99,13 @@ public class Main {
             Domicilio dom = new Domicilio(idDom, calle, numero, localidad, provincia);
             Paciente paciente = new Paciente(id, nombre, apellido, dni, LocalDate.now(), dom);
 
-            try {
-                servicioPaciente.registrarPaciente(paciente);
+            boolean exito = servicioPaciente.registrarPaciente(paciente);
+            if (exito) {
                 System.out.println("Paciente registrado con éxito.");
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+            } else {
+                System.out.println("Error: Datos inválidos o el DNI ya se encuentra registrado.");
             }
+
         } else if (op == 2) {
             System.out.println("\n-- Lista de Pacientes --");
             for (Paciente p : servicioPaciente.listarTodos()) {
@@ -120,7 +121,7 @@ public class Main {
         System.out.println("\n--- MENÚ ODONTÓLOGOS ---");
         System.out.println("1. Registrar nuevo odontólogo");
         System.out.println("2. Listar todos los odontólogos");
-        System.out.print("➤ Opción: ");
+        System.out.print("-> Opción: ");
         int op = scanner.nextInt();
         scanner.nextLine();
 
@@ -137,8 +138,12 @@ public class Main {
             String matricula = scanner.nextLine();
 
             Odontologo odontologo = new Odontologo(id, nombre, apellido, matricula);
-            servicioOdontologo.registrarOdontologo(odontologo);
-            System.out.println("Odontólogo registrado con éxito.");
+            boolean exito = servicioOdontologo.registrarOdontologo(odontologo);
+            if (exito) {
+                System.out.println("Odontólogo registrado con éxito.");
+            } else {
+                System.out.println("Error: Datos inválidos o la matrícula ya se encuentra registrada.");
+            }
 
         } else if (op == 2) {
             System.out.println("\n-- Lista de Odontólogos --");
@@ -155,7 +160,7 @@ public class Main {
         System.out.println("\n--- MENÚ TURNOS ---");
         System.out.println("1. Asignar nuevo turno");
         System.out.println("2. Listar todos los turnos");
-        System.out.print("➤ Opción: ");
+        System.out.print("-> Opción: ");
         int op = scanner.nextInt();
         scanner.nextLine();
 
@@ -183,12 +188,12 @@ public class Main {
             scanner.nextLine();
 
             LocalDateTime fechaTurno = LocalDateTime.now().plusDays(1);
-            System.out.println("ℹFecha asignada automáticamente para mañana: " + fechaTurno);
+            System.out.println("Fecha asignada automáticamente para mañana: " + fechaTurno);
 
             System.out.println("\n¿Qué tipo de turno es?");
             System.out.println("1. Turno Regular (Control / Rutina)");
             System.out.println("2. Turno de Urgencia (Dolor / Extracción)");
-            System.out.print("➤ Opción: ");
+            System.out.print("-> Opción: ");
             int tipo = scanner.nextInt();
             scanner.nextLine();
 
@@ -205,8 +210,12 @@ public class Main {
                 return;
             }
 
-            servicioTurno.registrarTurno(nuevoTurno);
-            System.out.println("Turno asignado con éxito.");
+            boolean exito = servicioTurno.registrarTurno(nuevoTurno);
+            if (!exito) {
+                System.out.println("Error: Datos inválidos o el odontólogo ya tiene un turno ocupado para ese horario.");
+            } else {
+                System.out.println("Turno agendado con éxito.");
+            }
 
         } else if (op == 2) {
             System.out.println("\n-- Agenda de Turnos --");

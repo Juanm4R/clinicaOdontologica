@@ -7,12 +7,14 @@ public abstract class Turno {
     protected Paciente paciente;
     protected Odontologo odontologo;
     protected LocalDateTime fechaHora;
+    protected EstadoTurno estado;
 
     public Turno(Long id, Paciente paciente, Odontologo odontologo, LocalDateTime fechaHora) {
         this.id = id;
         this.paciente = paciente;
         this.odontologo = odontologo;
         this.fechaHora = fechaHora;
+        this.estado = EstadoTurno.PENDIENTE;
     }
 
     public abstract double calcularDuracionMinutos();
@@ -32,6 +34,7 @@ public abstract class Turno {
         return "ID: " + id +
                 " | Paciente: " + paciente.getNombre() + " " + paciente.getApellido() +
                 " | Odontólogo: " + odontologo.getApellido() +
-                " | Fecha y Hora: " + fechaHora;
+                " | Fecha y Hora: " + fechaHora +
+                " | Estado: " + estado;
     }
 }
