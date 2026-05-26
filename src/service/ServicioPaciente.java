@@ -4,6 +4,7 @@ import exception.DatoInvalidoException;
 import exception.PacienteNoEncontradoException;
 import model.Paciente;
 import repository.IRepositorio;
+import java.util.stream.Collectors;
 import java.util.List;
 
 public class ServicioPaciente {
@@ -37,6 +38,12 @@ public class ServicioPaciente {
             throw new DatoInvalidoException("Error: El paciente debe tener un ID para ser actualizado.");
         }
         repositorio.actualizar(paciente);
+    }
+
+    public List<Paciente> listarPacientesOrdenados() {
+        return repositorio.buscarTodos().stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public void eliminarPaciente(Long id) throws PacienteNoEncontradoException {

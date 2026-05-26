@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Paciente extends Persona {
+public class Paciente extends Persona implements Comparable<Paciente> {
     private String dni;
     private LocalDate fechaIngreso;
     private Domicilio domicilio;
@@ -41,5 +41,14 @@ public class Paciente extends Persona {
         return "Paciente [ID: " + id + "] " + getNombreCompleto() +
                 " | DNI: " + dni +  " | Alta: " + fechaIngreso +
                 "\nResidencia: " + domicilio;
+    }
+
+    @Override
+    public int compareTo(Paciente otro) {
+        int comparacionApellido = this.apellido.compareToIgnoreCase(otro.getApellido());
+        if (comparacionApellido == 0) {
+            return this.nombre.compareToIgnoreCase(otro.getNombre());
+        }
+        return comparacionApellido;
     }
 }
