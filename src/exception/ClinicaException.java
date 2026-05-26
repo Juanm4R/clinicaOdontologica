@@ -8,4 +8,3 @@ public class ClinicaException extends Exception {
 
 }
 
-

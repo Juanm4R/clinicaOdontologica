@@ -6,6 +6,7 @@ import model.Odontologo;
 import repository.IRepositorio;
 import java.util.List;
 
+
 public class ServicioOdontologo {
     private IRepositorio<Odontologo> repositorio;
 

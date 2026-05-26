@@ -5,3 +5,4 @@ public class PacienteNoEncontradoException extends ClinicaException {
         super(message);
     }
 }
+

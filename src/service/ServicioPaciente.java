@@ -26,6 +26,7 @@ public class ServicioPaciente {
             throw new PacienteNoEncontradoException("No se encontró ningún paciente con el ID: " + id);
         }
         return encontrado;
+
     }
 
     public List<Paciente> listarTodos() {

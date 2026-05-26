@@ -5,3 +5,4 @@ public class TurnoYaReservadoException extends ClinicaException {
         super(message);
     }
 }
+

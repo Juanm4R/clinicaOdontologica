@@ -5,3 +5,4 @@ public class OdontologoNoEncontradoException extends ClinicaException {
         super(message);
     }
 }
+
