@@ -44,6 +44,8 @@ public class ServicioTurno {
             throw new TurnoYaReservadoException("Error: El odontólogo ya tiene un turno ocupado en ese horario.");
         }
 
+        
+
         repositorio.guardar(turno);
     }
 
