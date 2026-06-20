@@ -1,13 +1,12 @@
 package model;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Odontologo extends Persona {
+public class Odontologo extends Persona implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String matricula;
 
-    public Odontologo() {
-        super();
-    }
+    public Odontologo() { super(); }
 
     public Odontologo(Long id, String nombre, String apellido, String matricula) {
         super(id, nombre, apellido);
@@ -26,7 +25,5 @@ public class Odontologo extends Persona {
     }
 
     @Override
-    public String toString() {
-        return "Odontólogo: " + getNombreCompleto() + " (Matrícula: " + matricula + ")";
-    }
+    public String toString() { return "Dr/Dra. " + getNombreCompleto() + " (Mat: " + matricula + ")"; }
 }
