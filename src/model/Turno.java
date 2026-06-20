@@ -1,8 +1,9 @@
 package model;
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class Turno {
+public abstract class Turno implements Serializable {
+    private static final long serialVersionUID = 1L;
     protected Long id;
     protected Paciente paciente;
     protected Odontologo odontologo;
@@ -20,21 +21,14 @@ public abstract class Turno {
     public abstract double calcularDuracionMinutos();
 
     public Long getId() { return id; }
-    public Paciente getPaciente() { return paciente; }
-    public Odontologo getOdontologo() { return odontologo; }
-    public LocalDateTime getFechaHora() { return fechaHora; }
-
     public void setId(Long id) { this.id = id; }
+    public Paciente getPaciente() { return paciente; }
     public void setPaciente(Paciente paciente) { this.paciente = paciente; }
+    public Odontologo getOdontologo() { return odontologo; }
     public void setOdontologo(Odontologo odontologo) { this.odontologo = odontologo; }
+    public LocalDateTime getFechaHora() { return fechaHora; }
     public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
 
     @Override
-    public String toString() {
-        return "ID: " + id +
-                " | Paciente: " + paciente.getNombre() + " " + paciente.getApellido() +
-                " | Odontólogo: " + odontologo.getApellido() +
-                " | Fecha y Hora: " + fechaHora +
-                " | Estado: " + estado;
-    }
+    public String toString() { return "Fecha: " + fechaHora + " | Estado: " + estado; }
 }
