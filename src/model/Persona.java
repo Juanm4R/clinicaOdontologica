@@ -1,9 +1,9 @@
 package model;
 
 public abstract class Persona {
-    protected Long id;
-    protected String nombre;
-    protected String apellido;
+    private Long id;
+    private String nombre;
+    private String apellido;
 
     public Persona() {
     }

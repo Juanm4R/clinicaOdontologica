@@ -3,11 +3,11 @@ package model;
 import java.time.LocalDateTime;
 
 public abstract class Turno {
-    protected Long id;
-    protected Paciente paciente;
-    protected Odontologo odontologo;
-    protected LocalDateTime fechaHora;
-    protected EstadoTurno estado;
+    private Long id;
+    private Paciente paciente;
+    private Odontologo odontologo;
+    private LocalDateTime fechaHora;
+    private EstadoTurno estado;
 
     public Turno(Long id, Paciente paciente, Odontologo odontologo, LocalDateTime fechaHora) {
         this.id = id;

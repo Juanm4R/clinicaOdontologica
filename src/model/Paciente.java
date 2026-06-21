@@ -37,6 +37,11 @@ public class Paciente extends Persona implements Comparable<Paciente> {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(dni);
+    }
+
+    @Override
     public String toString() {
         return "Paciente [ID: " + id + "] " + getNombreCompleto() +
                 " | DNI: " + dni +  " | Alta: " + fechaIngreso +

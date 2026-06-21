@@ -1,5 +1,6 @@
 package ui;
 
+import exception.ClinicaException;
 import model.*;
 import repository.*;
 import service.*;
@@ -73,8 +74,6 @@ public class Main {
 
         if (op == 1) {
             System.out.println("\n-- Datos del Paciente --");
-            System.out.print("ID (Numérico): ");
-            Long id = scanner.nextLong();
             scanner.nextLine();
             System.out.print("Nombre: ");
             String nombre = scanner.nextLine();
@@ -97,13 +96,13 @@ public class Main {
             String provincia = scanner.nextLine();
 
             Domicilio dom = new Domicilio(idDom, calle, numero, localidad, provincia);
-            Paciente paciente = new Paciente(id, nombre, apellido, dni, LocalDate.now(), dom);
+            Paciente paciente = new Paciente(null, nombre, apellido, dni, LocalDate.now(), dom);
 
             try {
                 servicioPaciente.registrarPaciente(paciente);
-                System.out.println("Paciente registrado con éxito.");
-            } catch (exception.ClinicaException e) {
-                System.out.println("¡Ups! Hubo un problema: " + e.getMessage());
+                System.out.println("Paciente registrado con éxito. Su N° de Afiliado (ID) es: " + paciente.getId());
+            } catch (ClinicaException e) {
+                System.out.println("Hubo un problema: " + e.getMessage());
             }
 
         } else if (op == 2) {
@@ -127,8 +126,6 @@ public class Main {
 
         if (op == 1) {
             System.out.println("\n-- Datos del Odontólogo --");
-            System.out.print("ID (Numérico): ");
-            Long id = scanner.nextLong();
             scanner.nextLine();
             System.out.print("Nombre: ");
             String nombre = scanner.nextLine();
@@ -137,13 +134,13 @@ public class Main {
             System.out.print("Matrícula: ");
             String matricula = scanner.nextLine();
 
-            Odontologo odontologo = new Odontologo(id, nombre, apellido, matricula);
+            Odontologo odontologo = new Odontologo(null, nombre, apellido, matricula);
 
             try {
                 servicioOdontologo.registrarOdontologo(odontologo);
-                System.out.println("Odontólogo registrado con éxito.");
-            } catch (exception.ClinicaException e) {
-                System.out.println(" Hubo un problema: " + e.getMessage());
+                System.out.println("Odontólogo registrado con éxito. ID asignado");
+            } catch (ClinicaException e) {
+                System.out.println("Hubo un problema: " + e.getMessage());
             }
 
         } else if (op == 2) {
@@ -176,10 +173,6 @@ public class Main {
                 Long idOdontologo = scanner.nextLong();
                 Odontologo odontologoAsignado = servicioOdontologo.buscarOdontologo(idOdontologo);
 
-                System.out.print("ID para el nuevo turno: ");
-                Long idTurno = scanner.nextLong();
-                scanner.nextLine();
-
                 LocalDateTime fechaTurno = LocalDateTime.now().plusDays(1);
                 System.out.println("Fecha asignada automáticamente para mañana: " + fechaTurno);
 
@@ -193,11 +186,11 @@ public class Main {
                 Turno nuevoTurno = null;
 
                 if (tipo == 1) {
-                    nuevoTurno = new TurnoRegular(idTurno, pacienteAsignado, odontologoAsignado, fechaTurno);
+                    nuevoTurno = new TurnoRegular(null, pacienteAsignado, odontologoAsignado, fechaTurno);
                 } else if (tipo == 2) {
                     System.out.print("Especifique el motivo de la urgencia: ");
                     String motivo = scanner.nextLine();
-                    nuevoTurno = new TurnoUrgente(idTurno, pacienteAsignado, odontologoAsignado, fechaTurno, motivo);
+                    nuevoTurno = new TurnoUrgente(null, pacienteAsignado, odontologoAsignado, fechaTurno, motivo);
                 } else {
                     System.out.println("Tipo inválido. Turno cancelado.");
                     return;
@@ -206,7 +199,7 @@ public class Main {
                 servicioTurno.registrarTurno(nuevoTurno);
                 System.out.println("Turno agendado con éxito.");
 
-            } catch (exception.ClinicaException e) {
+            } catch (ClinicaException e) {
                 System.out.println("Operación fallida: " + e.getMessage());
             } catch (Exception e) {
                 System.out.println("Error de entrada de datos. Por favor, intente nuevamente.");

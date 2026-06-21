@@ -6,9 +6,13 @@ import java.util.ArrayList;
 
 public class RepositorioTurno implements IRepositorio<Turno> {
     private HashMap<Long, Turno> turnos = new HashMap<>();
+    private Long generadorId = 1L;
 
     @Override
     public void guardar(Turno turno) {
+        if (turno.getId() == null) {
+            turno.setId(generadorId++);
+        }
         turnos.put(turno.getId(), turno);
     }
 

@@ -1,10 +1,8 @@
 package exception;
 
-public class ClinicaException extends Exception {
+public abstract class ClinicaException extends Exception {
     public ClinicaException(String message) {
         super(message);
     }
-
-
 }
 

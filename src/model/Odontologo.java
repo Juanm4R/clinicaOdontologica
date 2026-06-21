@@ -26,6 +26,11 @@ public class Odontologo extends Persona {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(matricula);
+    }
+
+    @Override
     public String toString() {
         return "Odontólogo: " + getNombreCompleto() + " (Matrícula: " + matricula + ")";
     }
