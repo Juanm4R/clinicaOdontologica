@@ -1,12 +1,13 @@
 package model;
+import java.io.Serializable;
 
-public abstract class Persona {
+public abstract class Persona implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String nombre;
     private String apellido;
 
-    public Persona() {
-    }
+    public Persona() {}
 
     public Persona(Long id, String nombre, String apellido) {
         this.id = id;

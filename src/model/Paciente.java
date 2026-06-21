@@ -1,9 +1,10 @@
 package model;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Paciente extends Persona implements Comparable<Paciente> {
+public class Paciente extends Persona implements Comparable<Paciente>, Serializable {
+    private static final long serialVersionUID = 1L;
     private String dni;
     private LocalDate fechaIngreso;
     private Domicilio domicilio;
@@ -21,10 +22,8 @@ public class Paciente extends Persona implements Comparable<Paciente> {
 
     public String getDni() { return dni; }
     public void setDni(String dni) { this.dni = dni; }
-
     public LocalDate getFechaIngreso() { return fechaIngreso; }
     public void setFechaIngreso(LocalDate fechaIngreso) { this.fechaIngreso = fechaIngreso; }
-
     public Domicilio getDomicilio() { return domicilio; }
     public void setDomicilio(Domicilio domicilio) { this.domicilio = domicilio; }
 

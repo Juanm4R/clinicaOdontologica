@@ -1,8 +1,9 @@
 package model;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Odontologo extends Persona {
+public class Odontologo extends Persona implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String matricula;
 
     public Odontologo() {

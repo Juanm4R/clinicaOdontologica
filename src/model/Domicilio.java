@@ -1,6 +1,8 @@
 package model;
+import java.io.Serializable;
 
-public class Domicilio {
+public class Domicilio implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String calle;
     private String numero;
@@ -29,7 +31,5 @@ public class Domicilio {
     public void setProvincia(String provincia) { this.provincia = provincia; }
 
     @Override
-    public String toString() {
-        return calle + " " + numero + ", " + localidad + " - " + provincia;
-    }
+    public String toString() { return calle + " " + numero + ", " + localidad + " - " + provincia; }
 }
