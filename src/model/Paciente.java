@@ -9,7 +9,9 @@ public class Paciente extends Persona implements Comparable<Paciente>, Serializa
     private LocalDate fechaIngreso;
     private Domicilio domicilio;
 
-    public Paciente() { super(); }
+    public Paciente() {
+        super();
+    }
 
     public Paciente(Long id, String nombre, String apellido, String dni, LocalDate fechaIngreso, Domicilio domicilio) {
         super(id, nombre, apellido);
@@ -34,12 +36,23 @@ public class Paciente extends Persona implements Comparable<Paciente>, Serializa
     }
 
     @Override
-    public String toString() { return getNombreCompleto() + " (DNI: " + dni + ")"; }
+    public int hashCode() {
+        return Objects.hashCode(dni);
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente [ID: " + id + "] " + getNombreCompleto() +
+                " | DNI: " + dni +  " | Alta: " + fechaIngreso +
+                "\nResidencia: " + domicilio;
+    }
 
     @Override
     public int compareTo(Paciente otro) {
         int comparacionApellido = this.apellido.compareToIgnoreCase(otro.getApellido());
-        if (comparacionApellido == 0) return this.nombre.compareToIgnoreCase(otro.getNombre());
+        if (comparacionApellido == 0) {
+            return this.nombre.compareToIgnoreCase(otro.getNombre());
+        }
         return comparacionApellido;
     }
 }

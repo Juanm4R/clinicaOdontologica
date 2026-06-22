@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 
 public abstract class Turno implements Serializable {
     private static final long serialVersionUID = 1L;
-    protected Long id;
-    protected Paciente paciente;
-    protected Odontologo odontologo;
-    protected LocalDateTime fechaHora;
-    protected EstadoTurno estado;
+    private Long id;
+    private Paciente paciente;
+    private Odontologo odontologo;
+    private LocalDateTime fechaHora;
+    private EstadoTurno estado;
 
     public Turno(Long id, Paciente paciente, Odontologo odontologo, LocalDateTime fechaHora) {
         this.id = id;
@@ -30,5 +30,11 @@ public abstract class Turno implements Serializable {
     public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
 
     @Override
-    public String toString() { return "Fecha: " + fechaHora + " | Estado: " + estado; }
+    public String toString() {
+        return "ID: " + id +
+                " | Paciente: " + paciente.getNombre() + " " + paciente.getApellido() +
+                " | Odontólogo: " + odontologo.getApellido() +
+                " | Fecha y Hora: " + fechaHora +
+                " | Estado: " + estado;
+    }
 }

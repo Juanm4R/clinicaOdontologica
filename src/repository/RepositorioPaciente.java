@@ -7,20 +7,44 @@ import java.util.List;
 
 public class RepositorioPaciente implements IRepositorio<Paciente> {
     private HashMap<Long, Paciente> pacientes = new HashMap<>();
+    private Long generadorId = 1L;
     private final String ARCHIVO = "pacientes.dat";
 
     public RepositorioPaciente() { cargarDesdeArchivo(); }
 
     @Override
-    public void guardar(Paciente paciente) { pacientes.put(paciente.getId(), paciente); guardarEnArchivo(); }
+    public void guardar(Paciente paciente) {
+        if (paciente.getId() == null) {
+            paciente.setId(generadorId++);
+        }
+        pacientes.put(paciente.getId(), paciente);
+        guardarEnArchivo();
+    }
+
     @Override
-    public Paciente buscar(Long id) { return pacientes.get(id); }
+    public Paciente buscar(Long id) {
+        return pacientes.get(id);
+    }
+
     @Override
-    public List<Paciente> buscarTodos() { return new ArrayList<>(pacientes.values()); }
+    public List<Paciente> buscarTodos() {
+        return new ArrayList<>(pacientes.values());
+    }
+
     @Override
-    public void actualizar(Paciente paciente) { pacientes.put(paciente.getId(), paciente); guardarEnArchivo(); }
+    public void actualizar(Paciente paciente) {
+        if (paciente.getId() == null || !pacientes.containsKey(paciente.getId())) {
+            throw new IllegalArgumentException("No se puede actualizar un paciente que no existe en la base de datos.");
+        }
+        pacientes.put(paciente.getId(), paciente);
+        guardarEnArchivo();
+    }
+
     @Override
-    public void eliminar(Long id) { pacientes.remove(id); guardarEnArchivo(); }
+    public void eliminar(Long id) {
+        pacientes.remove(id);
+        guardarEnArchivo();
+    }
 
     private void guardarEnArchivo() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {

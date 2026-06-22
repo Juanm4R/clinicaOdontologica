@@ -7,20 +7,44 @@ import java.util.List;
 
 public class RepositorioOdontologo implements IRepositorio<Odontologo> {
     private HashMap<Long, Odontologo> odontologos = new HashMap<>();
+    private Long generadorId = 1L;
     private final String ARCHIVO = "odontologos.dat";
 
     public RepositorioOdontologo() { cargarDesdeArchivo(); }
 
     @Override
-    public void guardar(Odontologo odontologo) { odontologos.put(odontologo.getId(), odontologo); guardarEnArchivo(); }
+    public void guardar(Odontologo odontologo) {
+        if (odontologo.getId() == null) {
+            odontologo.setId(generadorId++);
+        }
+        odontologos.put(odontologo.getId(), odontologo);
+        guardarEnArchivo();
+    }
+
     @Override
-    public Odontologo buscar(Long id) { return odontologos.get(id); }
+    public Odontologo buscar(Long id) {
+        return odontologos.get(id);
+    }
+
     @Override
-    public List<Odontologo> buscarTodos() { return new ArrayList<>(odontologos.values()); }
+    public List<Odontologo> buscarTodos() {
+        return new ArrayList<>(odontologos.values());
+    }
+
     @Override
-    public void actualizar(Odontologo odontologo) { odontologos.put(odontologo.getId(), odontologo); guardarEnArchivo(); }
+    public void actualizar(Odontologo odontologo) {
+        if (odontologo.getId() == null || !odontologos.containsKey(odontologo.getId())) {
+            throw new IllegalArgumentException("El odontólogo no existe en el registro.");
+        }
+        odontologos.put(odontologo.getId(), odontologo);
+        guardarEnArchivo();
+    }
+
     @Override
-    public void eliminar(Long id) { odontologos.remove(id); guardarEnArchivo(); }
+    public void eliminar(Long id) {
+        odontologos.remove(id);
+        guardarEnArchivo();
+    }
 
     private void guardarEnArchivo() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {

@@ -3,9 +3,9 @@ import java.io.Serializable;
 
 public abstract class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
-    protected Long id;
-    protected String nombre;
-    protected String apellido;
+    private Long id;
+    private String nombre;
+    private String apellido;
 
     public Persona() {}
 
@@ -17,9 +17,14 @@ public abstract class Persona implements Serializable {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
+
     public String getApellido() { return apellido; }
     public void setApellido(String apellido) { this.apellido = apellido; }
-    public String getNombreCompleto() { return this.nombre + " " + this.apellido; }
+
+    public String getNombreCompleto() {
+        return this.nombre + " " + this.apellido;
+    }
 }

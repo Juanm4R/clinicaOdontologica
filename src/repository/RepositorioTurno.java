@@ -7,20 +7,40 @@ import java.util.List;
 
 public class RepositorioTurno implements IRepositorio<Turno> {
     private HashMap<Long, Turno> turnos = new HashMap<>();
+    private Long generadorId = 1L;
     private final String ARCHIVO = "turnos.dat";
 
     public RepositorioTurno() { cargarDesdeArchivo(); }
 
     @Override
-    public void guardar(Turno turno) { turnos.put(turno.getId(), turno); guardarEnArchivo(); }
+    public void guardar(Turno turno) {
+        if (turno.getId() == null) {
+            turno.setId(generadorId++);
+        }
+        turnos.put(turno.getId(), turno);
+        guardarEnArchivo();
+    }
+
     @Override
-    public Turno buscar(Long id) { return turnos.get(id); }
+    public Turno buscar(Long id) {
+        return turnos.get(id);
+    }
+
     @Override
-    public List<Turno> buscarTodos() { return new ArrayList<>(turnos.values()); }
+    public List<Turno> buscarTodos() {
+        return new ArrayList<>(turnos.values());
+    }
+
     @Override
-    public void actualizar(Turno turno) { turnos.put(turno.getId(), turno); guardarEnArchivo(); }
+    public void actualizar(Turno turno) {
+        turnos.put(turno.getId(), turno);
+        guardarEnArchivo();
+    }
     @Override
-    public void eliminar(Long id) { turnos.remove(id); guardarEnArchivo(); }
+    public void eliminar(Long id) {
+        turnos.remove(id);
+        guardarEnArchivo();
+    }
 
     private void guardarEnArchivo() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
