@@ -77,7 +77,6 @@ public class PanelTurnos extends JPanel {
             actualizarTabla();
             JOptionPane.showMessageDialog(this, "Turno agendado exitosamente.");
 
-            // Separamos las excepciones aquí:
         } catch (ClinicaException ex) {
             JOptionPane.showMessageDialog(this, "Error de registro: " + ex.getMessage(), "Atención", JOptionPane.WARNING_MESSAGE);
         } catch (Exception ex) {
