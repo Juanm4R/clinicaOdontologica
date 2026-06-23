@@ -10,7 +10,6 @@ public class VentanaPrincipal extends JFrame {
     private ServicioPaciente servicioPaciente;
     private ServicioOdontologo servicioOdontologo;
     private ServicioTurno servicioTurno;
-    private JLabel lblBarraEstado;
 
     public VentanaPrincipal() {
         servicioPaciente = new ServicioPaciente(new RepositorioPaciente());
