@@ -42,16 +42,16 @@ public class Paciente extends Persona implements Comparable<Paciente>, Serializa
 
     @Override
     public String toString() {
-        return "Paciente [ID: " + id + "] " + getNombreCompleto() +
+        return "Paciente [ID: " + getId() + "] " + getNombreCompleto() +
                 " | DNI: " + dni +  " | Alta: " + fechaIngreso +
                 "\nResidencia: " + domicilio;
     }
 
     @Override
     public int compareTo(Paciente otro) {
-        int comparacionApellido = this.apellido.compareToIgnoreCase(otro.getApellido());
+        int comparacionApellido = this.getApellido().compareToIgnoreCase(otro.getApellido());
         if (comparacionApellido == 0) {
-            return this.nombre.compareToIgnoreCase(otro.getNombre());
+            return this.getNombre().compareToIgnoreCase(otro.getNombre());
         }
         return comparacionApellido;
     }
