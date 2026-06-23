@@ -58,6 +58,11 @@ public class RepositorioOdontologo implements IRepositorio<Odontologo> {
         if (!file.exists()) return;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             odontologos = (HashMap<Long, Odontologo>) ois.readObject();
+            for (Long idGuardado : odontologos.keySet()) {
+                if (idGuardado >= generadorId) {
+                    generadorId = idGuardado + 1;
+                }
+            }
         } catch (Exception e) { System.err.println("Error al cargar odontólogos: " + e.getMessage()); }
     }
 }

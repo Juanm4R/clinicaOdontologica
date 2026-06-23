@@ -58,6 +58,11 @@ public class RepositorioPaciente implements IRepositorio<Paciente> {
         if (!file.exists()) return;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             pacientes = (HashMap<Long, Paciente>) ois.readObject();
+            for (Long idGuardado : pacientes.keySet()) {
+                if (idGuardado >= generadorId) {
+                    generadorId = idGuardado + 1;
+                }
+            }
         } catch (Exception e) { System.err.println("Error al deserializar pacientes: " + e.getMessage()); }
     }
 }

@@ -24,12 +24,12 @@ public class PanelPacientes extends JPanel {
         JPanel panelCampos = new JPanel(new GridLayout(9, 2, 5, 5));
         panelCampos.setBorder(BorderFactory.createTitledBorder("Información Completa del Paciente"));
 
-        panelCampos.add(new JLabel("ID Paciente:")); txtId = new JTextField(); panelCampos.add(txtId);
+        panelCampos.add(new JLabel("ID Paciente:")); txtId = new JTextField(); txtId.setEnabled(false); panelCampos.add(txtId);
         panelCampos.add(new JLabel("Nombre:")); txtNombre = new JTextField(); panelCampos.add(txtNombre);
         panelCampos.add(new JLabel("Apellido:")); txtApellido = new JTextField(); panelCampos.add(txtApellido);
         panelCampos.add(new JLabel("DNI:")); txtDni = new JTextField(); panelCampos.add(txtDni);
 
-        panelCampos.add(new JLabel("ID Domicilio:")); txtDomId = new JTextField(); panelCampos.add(txtDomId);
+        panelCampos.add(new JLabel("ID Domicilio:")); txtDomId = new JTextField(); txtDomId.setEnabled(false); panelCampos.add(txtDomId);
         panelCampos.add(new JLabel("Calle:")); txtCalle = new JTextField(); panelCampos.add(txtCalle);
         panelCampos.add(new JLabel("Número:")); txtNumero = new JTextField(); panelCampos.add(txtNumero);
         panelCampos.add(new JLabel("Localidad:")); txtLocalidad = new JTextField(); panelCampos.add(txtLocalidad);
@@ -74,17 +74,17 @@ public class PanelPacientes extends JPanel {
     }
 
     private void guardarPaciente() {
-        if (txtId.getText().trim().isEmpty() || txtDni.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete los campos ID y DNI.", "Error", JOptionPane.WARNING_MESSAGE);
+        if (txtDni.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete el DNI.", "Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
         try {
-            Long id = Long.parseLong(txtId.getText().trim());
+            Long id = txtId.getText().trim().isEmpty() ? null : Long.parseLong(txtId.getText().trim());
             Long domId = txtDomId.getText().trim().isEmpty() ? id : Long.parseLong(txtDomId.getText().trim());
             Domicilio dom = new Domicilio(domId, txtCalle.getText(), txtNumero.getText(), txtLocalidad.getText(), txtProvincia.getText());
             Paciente p = new Paciente(id, txtNombre.getText(), txtApellido.getText(), txtDni.getText(), LocalDate.now(), dom);
 
-            if (servicioPaciente.listarTodos().stream().anyMatch(pac -> pac.getId().equals(id))) {
+            if (id != null && servicioPaciente.listarTodos().stream().anyMatch(pac -> pac.getId().equals(id))) {
                 servicioPaciente.actualizarPaciente(p);
             } else {
                 servicioPaciente.registrarPaciente(p);

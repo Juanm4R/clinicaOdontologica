@@ -54,6 +54,11 @@ public class RepositorioTurno implements IRepositorio<Turno> {
         if (!file.exists()) return;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             turnos = (HashMap<Long, Turno>) ois.readObject();
+            for (Long idGuardado : turnos.keySet()) {
+                if (idGuardado >= generadorId) {
+                    generadorId = idGuardado + 1;
+                }
+            }
         } catch (Exception e) { System.err.println("Error al cargar turnos: " + e.getMessage()); }
     }
 }

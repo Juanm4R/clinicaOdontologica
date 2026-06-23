@@ -20,7 +20,7 @@ public class PanelOdontologos extends JPanel {
         JPanel panelCampos = new JPanel(new GridLayout(4, 2, 5, 5));
         panelCampos.setBorder(BorderFactory.createTitledBorder("Datos del Profesional"));
 
-        panelCampos.add(new JLabel("ID Odontólogo:")); txtId = new JTextField(); panelCampos.add(txtId);
+        panelCampos.add(new JLabel("ID Odontólogo:")); txtId = new JTextField(); txtId.setEnabled(false); panelCampos.add(txtId);
         panelCampos.add(new JLabel("Nombre:")); txtNombre = new JTextField(); panelCampos.add(txtNombre);
         panelCampos.add(new JLabel("Apellido:")); txtApellido = new JTextField(); panelCampos.add(txtApellido);
         panelCampos.add(new JLabel("N° Matrícula:")); txtMatricula = new JTextField(); panelCampos.add(txtMatricula);
@@ -56,13 +56,19 @@ public class PanelOdontologos extends JPanel {
     }
 
     private void guardarOdontologo() {
+        if (txtMatricula.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La matrícula es obligatoria.", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try {
-            Long id = Long.parseLong(txtId.getText().trim());
+            Long id = txtId.getText().trim().isEmpty() ? null : Long.parseLong(txtId.getText().trim());
             Odontologo o = new Odontologo(id, txtNombre.getText(), txtApellido.getText(), txtMatricula.getText());
-            if (servicioOdontologo.listarTodos().stream().anyMatch(od -> od.getId().equals(id))) {
+            if (id != null && servicioOdontologo.listarTodos().stream().anyMatch(od -> od.getId().equals(id))) {
                 servicioOdontologo.actualizarOdontologo(o);
+                JOptionPane.showMessageDialog(this, "Odontólogo actualizado correctamente.");
             } else {
                 servicioOdontologo.registrarOdontologo(o);
+                JOptionPane.showMessageDialog(this, "Odontólogo registrado. Matrícula asignada.");
             }
             limpiarFormulario(); actualizarTabla();
         } catch (Exception ex) { JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage()); }
@@ -74,6 +80,8 @@ public class PanelOdontologos extends JPanel {
             Long id = (Long) modeloTabla.getValueAt(fila, 0);
             try { servicioOdontologo.eliminarOdontologo(id); actualizarTabla(); limpiarFormulario(); }
             catch (OdontologoNoEncontradoException ex) { JOptionPane.showMessageDialog(this, ex.getMessage()); }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un odontólogo de la tabla para eliminar.");
         }
     }
 

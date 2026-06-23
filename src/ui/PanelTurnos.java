@@ -27,7 +27,7 @@ public class PanelTurnos extends JPanel {
         JPanel panelCampos = new JPanel(new GridLayout(7, 2, 5, 5));
         panelCampos.setBorder(BorderFactory.createTitledBorder("Agendado de Turno Médico"));
 
-        panelCampos.add(new JLabel("ID Turno:")); txtIdTurno = new JTextField(); panelCampos.add(txtIdTurno);
+        panelCampos.add(new JLabel("ID Turno:")); txtIdTurno = new JTextField(); txtIdTurno.setEnabled(false); panelCampos.add(txtIdTurno);
         panelCampos.add(new JLabel("Seleccionar Paciente:")); comboPacientes = new JComboBox<>(); panelCampos.add(comboPacientes);
         panelCampos.add(new JLabel("Seleccionar Odontólogo:")); comboOdontologos = new JComboBox<>(); panelCampos.add(comboOdontologos);
         panelCampos.add(new JLabel("Fecha (aaaa-MM-dd HH:mm):")); txtFechaHora = new JTextField(LocalDateTime.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))); panelCampos.add(txtFechaHora);
@@ -63,8 +63,12 @@ public class PanelTurnos extends JPanel {
     }
 
     private void agendarTurno() {
+        if (comboPacientes.getSelectedItem() == null || comboOdontologos.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Paciente y un Odontólogo.", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try {
-            Long id = Long.parseLong(txtIdTurno.getText().trim());
+            Long id = txtIdTurno.getText().trim().isEmpty() ? null : Long.parseLong(txtIdTurno.getText().trim());
             Paciente p = (Paciente) comboPacientes.getSelectedItem();
             Odontologo o = (Odontologo) comboOdontologos.getSelectedItem();
             LocalDateTime fecha = LocalDateTime.parse(txtFechaHora.getText().trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
@@ -76,6 +80,10 @@ public class PanelTurnos extends JPanel {
             servicioTurno.registrarTurno(nuevoTurno);
             actualizarTabla();
             JOptionPane.showMessageDialog(this, "Turno agendado exitosamente.");
+
+            // Limpiamos los campos
+            txtIdTurno.setText("");
+            txtMotivoUrgencia.setText("");
 
             // Separamos las excepciones aquí:
         } catch (ClinicaException ex) {

@@ -10,6 +10,7 @@ public class VentanaPrincipal extends JFrame {
     private ServicioPaciente servicioPaciente;
     private ServicioOdontologo servicioOdontologo;
     private ServicioTurno servicioTurno;
+    private JLabel lblBarraEstado;
 
     public VentanaPrincipal() {
         servicioPaciente = new ServicioPaciente(new RepositorioPaciente());
@@ -35,6 +36,20 @@ public class VentanaPrincipal extends JFrame {
                 System.out.println("Cierre seguro. Datos persistidos en archivos .dat");
             }
         });
+
+        //Llamamos hilo en segundo plano
+        iniciarHiloReloj();
+
+    }
+
+    private void iniciarHiloReloj() {
+        lblBarraEstado = new JLabel("Iniciando servicios del sistema...");
+        lblBarraEstado.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        add(lblBarraEstado, BorderLayout.SOUTH);
+
+        Thread hiloFondo = new Thread(new HiloReloj(lblBarraEstado));
+        hiloFondo.setDaemon(true);
+        hiloFondo.start();
     }
 
     public static void main(String[] args) {
