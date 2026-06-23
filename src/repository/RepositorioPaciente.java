@@ -33,9 +33,6 @@ public class RepositorioPaciente implements IRepositorio<Paciente> {
 
     @Override
     public void actualizar(Paciente paciente) {
-        if (paciente.getId() == null || !pacientes.containsKey(paciente.getId())) {
-            throw new IllegalArgumentException("No se puede actualizar un paciente que no existe en la base de datos.");
-        }
         pacientes.put(paciente.getId(), paciente);
         guardarEnArchivo();
     }

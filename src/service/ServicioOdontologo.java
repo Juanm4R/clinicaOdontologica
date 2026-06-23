@@ -2,6 +2,7 @@ package service;
 
 import exception.DatoInvalidoException;
 import exception.OdontologoNoEncontradoException;
+import exception.PacienteNoEncontradoException;
 import model.Odontologo;
 import repository.IRepositorio;
 import java.util.List;
@@ -32,9 +33,12 @@ public class ServicioOdontologo {
         return repositorio.buscarTodos();
     }
 
-    public void actualizarOdontologo(Odontologo odontologo) throws DatoInvalidoException {
+    public void actualizarOdontologo(Odontologo odontologo) throws DatoInvalidoException, OdontologoNoEncontradoException {
         if (odontologo.getId() == null) {
             throw new DatoInvalidoException("Error: El odontólogo debe tener un ID para ser actualizado.");
+        }
+        if (repositorio.buscar(odontologo.getId()) == null) {
+            throw new OdontologoNoEncontradoException("No se puede actualizar: el odontologo con ID " + odontologo.getId() + " fue eliminado o no existe en la base de datos.");
         }
         repositorio.actualizar(odontologo);
     }

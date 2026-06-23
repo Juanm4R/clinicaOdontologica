@@ -33,9 +33,12 @@ public class ServicioPaciente {
         return repositorio.buscarTodos();
     }
 
-    public void actualizarPaciente(Paciente paciente) throws DatoInvalidoException {
+    public void actualizarPaciente(Paciente paciente) throws DatoInvalidoException, PacienteNoEncontradoException {
         if (paciente.getId() == null) {
             throw new DatoInvalidoException("Error: El paciente debe tener un ID para ser actualizado.");
+        }
+        if (repositorio.buscar(paciente.getId()) == null) {
+            throw new PacienteNoEncontradoException("No se puede actualizar: el paciente con ID " + paciente.getId() + " fue eliminado o no existe en la base de datos.");
         }
         repositorio.actualizar(paciente);
     }

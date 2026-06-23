@@ -90,8 +90,12 @@ public class PanelTurnos extends JPanel {
             txtIdTurno.setText("");
             txtMotivoUrgencia.setText("");
 
-        } catch (exception.ClinicaException ex) {
-            JOptionPane.showMessageDialog(this, "Error de registro: " + ex.getMessage(), "Atención", JOptionPane.WARNING_MESSAGE);
+        } catch (exception.TurnoYaReservadoException ex) {
+            JOptionPane.showMessageDialog(this, "Horario ocupado: " + ex.getMessage(), "Choque de Turnos", JOptionPane.ERROR_MESSAGE);
+            txtFechaHora.setBackground(new Color(255, 200, 200));
+
+        } catch (exception.DatoInvalidoException ex) {
+            JOptionPane.showMessageDialog(this, "Datos incompletos o inválidos: " + ex.getMessage(), "Validación de Datos", JOptionPane.WARNING_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error en los datos ingresados: Revise el formato de fecha.", "Error", JOptionPane.ERROR_MESSAGE);
         }

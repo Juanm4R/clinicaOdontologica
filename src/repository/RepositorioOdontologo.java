@@ -33,9 +33,6 @@ public class RepositorioOdontologo implements IRepositorio<Odontologo> {
 
     @Override
     public void actualizar(Odontologo odontologo) {
-        if (odontologo.getId() == null || !odontologos.containsKey(odontologo.getId())) {
-            throw new IllegalArgumentException("El odontólogo no existe en el registro.");
-        }
         odontologos.put(odontologo.getId(), odontologo);
         guardarEnArchivo();
     }
