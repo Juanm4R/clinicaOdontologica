@@ -34,8 +34,13 @@ public class PanelBusquedas extends JPanel {
         add(new JScrollPane(tablaResultados), BorderLayout.CENTER);
 
         btnBuscar.addActionListener(e -> {
+            String input = txtIdOdontologo.getText().trim();
+            if(input.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Debe ingresar un ID para buscar.", "Atención", JOptionPane.WARNING_MESSAGE);
+                return; // Cortamos la ejecución antes de que llegue al parseLong
+            }
             try {
-                Long idOd = Long.parseLong(txtIdOdontologo.getText().trim());
+                Long idOd = Long.parseLong(input);
                 List<Turno> resultado = servicioTurno.buscarTurnosPorOdontologo(idOd);
                 modeloTabla.setRowCount(0);
                 for (Turno t : resultado) modeloTabla.addRow(new Object[]{t.getId(), t.getPaciente().getNombreCompleto(), t.getOdontologo().getApellido(), t.toString()});

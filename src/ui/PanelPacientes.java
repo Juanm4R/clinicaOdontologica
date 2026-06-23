@@ -63,10 +63,13 @@ public class PanelPacientes extends JPanel {
                         Paciente p = servicioPaciente.buscarPaciente(id);
                         txtId.setText(p.getId().toString()); txtNombre.setText(p.getNombre());
                         txtApellido.setText(p.getApellido()); txtDni.setText(p.getDni());
-                        txtDomId.setText(p.getDomicilio().getId().toString()); txtCalle.setText(p.getDomicilio().getCalle());
+                        txtDomId.setText(p.getDomicilio().getId() != null ? p.getDomicilio().getId().toString() : "");
+                        txtCalle.setText(p.getDomicilio().getCalle());
                         txtNumero.setText(p.getDomicilio().getNumero()); txtLocalidad.setText(p.getDomicilio().getLocalidad());
                         txtProvincia.setText(p.getDomicilio().getProvincia());
-                    } catch (Exception ex) {}
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(PanelPacientes.this, "No se pudo cargar el registro: " + ex.getMessage(), "Error de lectura", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
