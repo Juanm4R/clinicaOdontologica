@@ -1,10 +1,13 @@
 package ui;
+import exception.DatoInvalidoException;
+import exception.PacienteNoEncontradoException;
 import model.*;
 import service.*;
 import exception.ClinicaException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -35,7 +38,12 @@ public class PanelTurnos extends JPanel {
         panelCampos.add(new JLabel("Motivo de Urgencia:")); txtMotivoUrgencia = new JTextField(); txtMotivoUrgencia.setEnabled(false); panelCampos.add(txtMotivoUrgencia);
 
         JButton btnAsignar = new JButton("Agendar Turno");
-        panelIzquierdo.add(panelCampos, BorderLayout.CENTER); panelIzquierdo.add(btnAsignar, BorderLayout.SOUTH);
+        JButton btnEliminar = new JButton("Eliminar Turno");
+        panelIzquierdo.add(panelCampos, BorderLayout.CENTER);
+        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 5, 5));
+        panelBotones.add(btnAsignar);
+        panelBotones.add(btnEliminar);
+        panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
         add(panelIzquierdo, BorderLayout.WEST);
 
         modeloTabla = new DefaultTableModel(new String[]{"ID Turno", "Paciente", "Odontólogo", "Fecha/Hora", "Detalles"}, 0) {
@@ -51,6 +59,7 @@ public class PanelTurnos extends JPanel {
         });
 
         btnAsignar.addActionListener(e -> agendarTurno());
+        btnEliminar.addActionListener(e -> eliminarTurno());
 
         this.addHierarchyListener(e -> {
             if ((e.getChangeFlags() & java.awt.event.HierarchyEvent.SHOWING_CHANGED) != 0 && isShowing()) {
@@ -105,6 +114,35 @@ public class PanelTurnos extends JPanel {
         modeloTabla.setRowCount(0);
         for (Turno t : servicioTurno.listarTodos()) {
             modeloTabla.addRow(new Object[]{t.getId(), t.getPaciente().getNombreCompleto(), t.getOdontologo().getApellido(), t.getFechaHora(), t.toString()});
+        }
+    }
+
+    private void eliminarTurno() {
+        int fila = tablaTurnos.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un turno de la tabla para eliminar.", "Atención", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea cancelar el turno seleccionado?",
+                "Confirmar Cancelación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            Long id = (Long) modeloTabla.getValueAt(fila, 0);
+
+            try {
+                servicioTurno.eliminarTurno(id);
+                actualizarTabla();
+                JOptionPane.showMessageDialog(this, "Turno cancelado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "No se pudo eliminar el turno: " + ex.getMessage(),
+                        "Error del Sistema",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
