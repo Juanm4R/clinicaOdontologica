@@ -38,7 +38,9 @@ public class PanelTurnos extends JPanel {
         panelIzquierdo.add(panelCampos, BorderLayout.CENTER); panelIzquierdo.add(btnAsignar, BorderLayout.SOUTH);
         add(panelIzquierdo, BorderLayout.WEST);
 
-        modeloTabla = new DefaultTableModel(new String[]{"ID Turno", "Paciente", "Odontólogo", "Fecha/Hora", "Detalles"}, 0);
+        modeloTabla = new DefaultTableModel(new String[]{"ID Turno", "Paciente", "Odontólogo", "Fecha/Hora", "Detalles"}, 0) {
+            @Override public boolean isCellEditable(int row, int column) { return false; }
+        };
         tablaTurnos = new JTable(modeloTabla);
         add(new JScrollPane(tablaTurnos), BorderLayout.CENTER);
 
@@ -68,7 +70,11 @@ public class PanelTurnos extends JPanel {
             return;
         }
         try {
-            Long id = txtIdTurno.getText().trim().isEmpty() ? null : Long.parseLong(txtIdTurno.getText().trim());
+            Long id = null;
+            if (!txtIdTurno.getText().trim().isEmpty()) {
+                id = Long.parseLong(txtIdTurno.getText().trim());
+            }
+
             Paciente p = (Paciente) comboPacientes.getSelectedItem();
             Odontologo o = (Odontologo) comboOdontologos.getSelectedItem();
             LocalDateTime fecha = LocalDateTime.parse(txtFechaHora.getText().trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
@@ -81,11 +87,13 @@ public class PanelTurnos extends JPanel {
             actualizarTabla();
             JOptionPane.showMessageDialog(this, "Turno agendado exitosamente.");
 
-            // Separamos las excepciones aca:
-        } catch (ClinicaException ex) {
+            txtIdTurno.setText("");
+            txtMotivoUrgencia.setText("");
+
+        } catch (exception.ClinicaException ex) {
             JOptionPane.showMessageDialog(this, "Error de registro: " + ex.getMessage(), "Atención", JOptionPane.WARNING_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error en los datos ingresados: Revise el formato de fecha e ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error en los datos ingresados: Revise el formato de fecha.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

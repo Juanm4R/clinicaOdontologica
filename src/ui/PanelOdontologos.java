@@ -34,7 +34,9 @@ public class PanelOdontologos extends JPanel {
         panelIzquierdo.add(panelBotones, BorderLayout.SOUTH);
         add(panelIzquierdo, BorderLayout.WEST);
 
-        modeloTabla = new DefaultTableModel(new String[]{"ID", "Nombre", "Apellido", "Matrícula"}, 0);
+        modeloTabla = new DefaultTableModel(new String[]{"ID", "Nombre", "Apellido", "Matrícula"}, 0) {
+            @Override public boolean isCellEditable(int row, int column) { return false; }
+        };
         tablaOdontologos = new JTable(modeloTabla);
         add(new JScrollPane(tablaOdontologos), BorderLayout.CENTER);
 
@@ -61,9 +63,13 @@ public class PanelOdontologos extends JPanel {
             return;
         }
         try {
-            Long id = txtId.getText().trim().isEmpty() ? null : Long.parseLong(txtId.getText().trim());
+            Long id = null;
+            if (!txtId.getText().trim().isEmpty()) {
+                id = Long.parseLong(txtId.getText().trim());
+            }
+
             Odontologo o = new Odontologo(id, txtNombre.getText(), txtApellido.getText(), txtMatricula.getText());
-            if (id != null && servicioOdontologo.listarTodos().stream().anyMatch(od -> od.getId().equals(id))) {
+            if (id != null && servicioOdontologo.listarTodos().stream().anyMatch(od -> od.getId().equals(o.getId()))) {
                 servicioOdontologo.actualizarOdontologo(o);
                 JOptionPane.showMessageDialog(this, "Odontólogo actualizado correctamente.");
             } else {

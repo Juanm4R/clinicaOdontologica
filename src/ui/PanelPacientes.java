@@ -79,12 +79,20 @@ public class PanelPacientes extends JPanel {
             return;
         }
         try {
-            Long id = txtId.getText().trim().isEmpty() ? null : Long.parseLong(txtId.getText().trim());
-            Long domId = txtDomId.getText().trim().isEmpty() ? id : Long.parseLong(txtDomId.getText().trim());
+            Long id = null;
+            if (!txtId.getText().trim().isEmpty()) {
+                id = Long.parseLong(txtId.getText().trim());
+            }
+
+            Long domId = id;
+            if (!txtDomId.getText().trim().isEmpty()) {
+                domId = Long.parseLong(txtDomId.getText().trim());
+            }
+
             Domicilio dom = new Domicilio(domId, txtCalle.getText(), txtNumero.getText(), txtLocalidad.getText(), txtProvincia.getText());
             Paciente p = new Paciente(id, txtNombre.getText(), txtApellido.getText(), txtDni.getText(), LocalDate.now(), dom);
 
-            if (id != null && servicioPaciente.listarTodos().stream().anyMatch(pac -> pac.getId().equals(id))) {
+            if (id != null && servicioPaciente.listarTodos().stream().anyMatch(pac -> pac.getId().equals(p.getId()))) {
                 servicioPaciente.actualizarPaciente(p);
             } else {
                 servicioPaciente.registrarPaciente(p);

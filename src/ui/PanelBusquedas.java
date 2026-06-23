@@ -27,7 +27,9 @@ public class PanelBusquedas extends JPanel {
 
         add(panelNorte, BorderLayout.NORTH);
 
-        modeloTabla = new DefaultTableModel(new String[]{"ID Turno", "Paciente", "Odontólogo", "Detalle Completo"}, 0);
+        modeloTabla = new DefaultTableModel(new String[]{"ID Turno", "Paciente", "Odontólogo", "Detalle Completo"}, 0) {
+            @Override public boolean isCellEditable(int row, int column) { return false; }
+        };
         JTable tablaResultados = new JTable(modeloTabla);
         add(new JScrollPane(tablaResultados), BorderLayout.CENTER);
 
